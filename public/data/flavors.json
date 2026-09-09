@@ -1,0 +1,64 @@
+{
+  "flavors": [
+    {
+      "id": "classic",
+      "name": "Classic Fire",
+      "tag": "The original getaway",
+      "heat": 3,
+      "image": "/images/flavor-classic.jpg",
+      "ingredients": ["Mexican dark cacao", "Prickly pear", "Jalapeños", "Chili powder"],
+      "story": "The bar that started the house. Rich cacao, sun-ripe cactus fruit, a clean green kick, and chili that lingers like late light on the water.",
+      "weights": { "heat": 3, "fruit": 4, "cream": 0, "citrus": 1, "floral": 1, "smoke": 1, "spice": 3, "adventure": 3 }
+    },
+    {
+      "id": "mango",
+      "name": "Mango Habanero",
+      "tag": "Gold hour, live fire",
+      "heat": 4,
+      "image": "/images/flavor-mango.jpg",
+      "ingredients": ["Mexican dark cacao", "Ataulfo mango", "Habanero", "Chili dust"],
+      "story": "A market-stand sunset. Juicy mango sweetness first, then habanero heat that blooms slow and tropical.",
+      "weights": { "heat": 5, "fruit": 5, "cream": 0, "citrus": 1, "floral": 0, "smoke": 1, "spice": 4, "adventure": 5 }
+    },
+    {
+      "id": "hibiscus",
+      "name": "Hibiscus Cayenne",
+      "tag": "Floral heat",
+      "heat": 3,
+      "image": "/images/flavor-hibiscus.jpg",
+      "ingredients": ["Mexican dark cacao", "Jamaica hibiscus", "Cayenne", "Cacao nibs"],
+      "story": "Hibiscus tea and cayenne over dark chocolate. Romantic, tart, and a little dangerous in a silk dress.",
+      "weights": { "heat": 3, "fruit": 2, "cream": 0, "citrus": 1, "floral": 5, "smoke": 1, "spice": 3, "adventure": 3 }
+    },
+    {
+      "id": "lime",
+      "name": "Lime Chile",
+      "tag": "Bright, salted, sharp",
+      "heat": 2,
+      "image": "/images/flavor-lime.jpg",
+      "ingredients": ["Mexican dark cacao", "Persian lime", "Green chile", "Sea salt"],
+      "story": "Candied lime zest, green chile, and sea salt on dark cacao. Like a cold drink after the beach, with a spark.",
+      "weights": { "heat": 2, "fruit": 2, "cream": 0, "citrus": 5, "floral": 0, "smoke": 0, "spice": 2, "adventure": 3 }
+    },
+    {
+      "id": "horchata",
+      "name": "Horchata Glow",
+      "tag": "Cinnamon, vanilla, hush",
+      "heat": 1,
+      "image": "/images/flavor-horchata.jpg",
+      "ingredients": ["Mexican milk cacao", "Ceylon cinnamon", "Vanilla", "Mild chile"],
+      "story": "The gentle door into the house. Silky cacao, cinnamon, vanilla, and a chile warmth you notice only on the second square.",
+      "weights": { "heat": 1, "fruit": 0, "cream": 5, "citrus": 0, "floral": 1, "smoke": 0, "spice": 3, "adventure": 1 }
+    },
+    {
+      "id": "brasa",
+      "name": "Cacao Brasa",
+      "tag": "Ember, zest, night",
+      "heat": 4,
+      "image": "/images/flavor-brasa.jpg",
+      "ingredients": ["Extra-dark Mexican cacao", "Smoked chile", "Orange zest", "Cacao nibs"],
+      "story": "For people who want the fire without the fruit stand. Deep cacao, smoked chile, orange peel, and a finish like coals.",
+      "weights": { "heat": 4, "fruit": 0, "cream": 0, "citrus": 3, "floral": 0, "smoke": 5, "spice": 4, "adventure": 4 }
+    }
+  ]
+}

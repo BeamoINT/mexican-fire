@@ -25,7 +25,16 @@ npm run deploy
 
 ## Brand
 
-- Product: dark chocolate, prickly pear, jalapeños, chili powder
+- Line: *Taste the sweet, crave the heat*
 - Line: *Exotic getaway of flavor*
-- Line: *Taste the heat, crave the sweet*
-- Place: Cancún / Mexican Caribbean
+- Ingredients grown in Mexico with independent farmers
+- Wholesale to Whole Foods, Sprouts, and natural grocers
+
+## Pages
+
+- `/` Home
+- `/flavors.html` Collection
+- `/finder.html` Flavor Finder quiz
+- `/story.html` Farmers and ethics
+- `/wholesale.html` Retail strategy
+- `/contact.html` Writes the house inbox

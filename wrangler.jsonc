@@ -2,5 +2,9 @@
   "$schema": "https://unpkg.com/wrangler@4.130.0/config-schema.json",
   "name": "mexican-fire",
   "compatibility_date": "2026-09-09",
-  "pages_build_output_dir": "./public"
+  "pages_build_output_dir": "./public",
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "vars": {
+    "CONTACT_TO": "beamo@beamosupport.com"
+  }
 }
