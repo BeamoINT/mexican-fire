@@ -2,6 +2,8 @@
 
 Marketing site for **Mexican Fire™** — dark chocolate with prickly pear, jalapeños, and chili powder. An exotic getaway of flavor, inspired by Cancún.
 
+**Live site:** https://mexican-fire.pages.dev
+
 **Taste the heat, crave the sweet.**
 
 ## Local
