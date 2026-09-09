@@ -44,20 +44,55 @@ function heatDots(n) {
     .join("")}</div>`;
 }
 
+const CONTACT_INBOX = "beamo@beamosupport.com";
+
+function formSuccessMessage(intent) {
+  return intent === "tasting"
+    ? "You're on the list. Taste the sweet. Crave the heat."
+    : "Received. We will write back from the house.";
+}
+
 async function postForm(payload, statusEl) {
   statusEl.classList.remove("is-ok", "is-err");
   statusEl.textContent = "Sending…";
+
+  const subject =
+    payload.intent === "tasting"
+      ? "Mexican Fire — tasting list"
+      : payload.intent === "wholesale"
+        ? "Mexican Fire — wholesale inquiry"
+        : "Mexican Fire — contact";
+
   try {
-    const res = await fetch("/api/contact", {
+    const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_INBOX}`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: payload.name || "Tasting guest",
+        email: payload.email,
+        company: payload.company || "",
+        intent: payload.intent,
+        message: payload.message,
+        _replyto: payload.email,
+        _subject: subject,
+        _template: "table",
+        _captcha: "false",
+        _honey: payload.website || "",
+      }),
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.ok) {
-      throw new Error(data.error || "We could not send that just now.");
+    if (data.success === false || data.success === "false") {
+      const api = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const fallback = await api.json().catch(() => ({}));
+      if (!api.ok || !fallback.ok) {
+        throw new Error(data.message || fallback.error || "We could not send that just now.");
+      }
     }
-    statusEl.textContent = data.message;
+    statusEl.textContent = formSuccessMessage(payload.intent);
     statusEl.classList.add("is-ok");
     return true;
   } catch (err) {

@@ -81,13 +81,19 @@ export async function onRequestPost(context) {
   form.set("_template", "table");
   form.set("_captcha", "false");
 
+  const origin = new URL(request.url).origin;
   const upstream = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
     method: "POST",
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      Origin: origin,
+      Referer: `${origin}/contact.html`,
+    },
     body: form,
   });
 
-  if (!upstream.ok) {
+  const upstreamBody = await upstream.json().catch(() => ({}));
+  if (!upstream.ok || upstreamBody.success === false || upstreamBody.success === "false") {
     return json(
       {
         ok: false,
