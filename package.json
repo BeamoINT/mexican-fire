@@ -2,7 +2,7 @@
   "name": "mexican-fire",
   "version": "1.0.0",
   "private": true,
-  "description": "Mexican Fire — dark chocolate with prickly pear, jalapeños, and chili powder. An exotic getaway of flavor.",
+  "description": "Mexican Fire: dark chocolate with prickly pear, jalapeños, and chili powder. An exotic getaway of flavor.",
   "scripts": {
     "dev": "wrangler pages dev public --port 8787",
     "deploy": "wrangler pages deploy public --project-name mexican-fire"

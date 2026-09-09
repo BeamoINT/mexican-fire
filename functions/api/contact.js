@@ -54,10 +54,10 @@ export async function onRequestPost(context) {
   const to = clean(env.CONTACT_TO, 120) || "beamo@beamosupport.com";
   const subject =
     intent === "tasting"
-      ? "Mexican Fire — tasting list"
+      ? "Mexican Fire tasting list"
       : intent === "wholesale"
-        ? "Mexican Fire — wholesale inquiry"
-        : `Mexican Fire — ${intent}`;
+        ? "Mexican Fire wholesale inquiry"
+        : `Mexican Fire: ${intent}`;
 
   const text = [
     `Intent: ${intent}`,

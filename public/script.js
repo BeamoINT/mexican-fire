@@ -20,23 +20,42 @@ if (toggle && nav) {
   });
 }
 
-const revealEls = document.querySelectorAll(".reveal");
-if (revealEls.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.14 },
-  );
-  revealEls.forEach((el) => io.observe(el));
-} else {
-  revealEls.forEach((el) => el.classList.add("is-in"));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let revealObserver = null;
+
+function observeReveals(nodes) {
+  const els = [...nodes];
+  if (!els.length) return;
+  if (reduceMotion) {
+    els.forEach((el) => el.classList.add("is-in"));
+    return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+  }
+  els.forEach((el) => {
+    revealObserver.observe(el);
+    requestAnimationFrame(() => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92 && r.bottom > 40) {
+        el.classList.add("is-in");
+        revealObserver.unobserve(el);
+      }
+    });
+  });
 }
+
+observeReveals(document.querySelectorAll(".reveal"));
 
 function heatDots(n) {
   return `<div class="heat-dots" aria-label="Heat ${n} of 5">${[1, 2, 3, 4, 5]
@@ -58,10 +77,10 @@ async function postForm(payload, statusEl) {
 
   const subject =
     payload.intent === "tasting"
-      ? "Mexican Fire — tasting list"
+      ? "Mexican Fire tasting list"
       : payload.intent === "wholesale"
-        ? "Mexican Fire — wholesale inquiry"
-        : "Mexican Fire — contact";
+        ? "Mexican Fire wholesale inquiry"
+        : "Mexican Fire contact";
 
   try {
     const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_INBOX}`, {
@@ -159,16 +178,17 @@ if (flavorGrid || collectionRow || quizRoot) {
     if (collectionRow) {
       collectionRow.innerHTML = flavors
         .map(
-          (f) =>
-            `<a href="/flavors.html#${f.id}"><img src="${f.image}" alt="${f.name}: ${f.tag}"></a>`,
+          (f, i) =>
+            `<a class="reveal" style="--d:${i * 0.07}s" href="/flavors.html#${f.id}"><img src="${f.image}" alt="${f.name}: ${f.tag}"></a>`,
         )
         .join("");
+      observeReveals(collectionRow.querySelectorAll(".reveal"));
     }
 
     if (flavorGrid) {
       flavorGrid.innerHTML = flavors
         .map(
-          (f) => `<article class="flavor-card reveal is-in" id="${f.id}">
+          (f, i) => `<article class="flavor-card reveal" id="${f.id}" style="--d:${i * 0.08}s">
             <img src="${f.image}" alt="${f.name} bar">
             <div class="body">
               <p class="eyebrow">${f.tag}</p>
@@ -180,6 +200,7 @@ if (flavorGrid || collectionRow || quizRoot) {
           </article>`,
         )
         .join("");
+      observeReveals(flavorGrid.querySelectorAll(".reveal"));
       if (location.hash) {
         document.querySelector(location.hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -239,7 +260,25 @@ function initQuiz(flavors) {
   let step = 0;
   const score = { heat: 0, fruit: 0, cream: 0, citrus: 0, floral: 0, smoke: 0, spice: 0, adventure: 0 };
 
-  const render = () => {
+  const bind = () => {
+    quizRoot.querySelectorAll("button[data-i]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const add = questions[step].options[Number(btn.dataset.i)].add;
+        Object.entries(add).forEach(([k, v]) => {
+          score[k] += v;
+        });
+        step += 1;
+        render();
+      });
+    });
+    document.getElementById("quiz-again")?.addEventListener("click", () => {
+      step = 0;
+      Object.keys(score).forEach((k) => (score[k] = 0));
+      render();
+    });
+  };
+
+  const markup = () => {
     if (step >= questions.length) {
       const winner = flavors
         .map((f) => ({
@@ -248,7 +287,7 @@ function initQuiz(flavors) {
         }))
         .sort((a, b) => b.n - a.n)[0].f;
 
-      quizRoot.innerHTML = `<div class="quiz-result">
+      return `<div class="quiz-face"><div class="quiz-result">
         <p class="eyebrow">Your bar</p>
         <h2>${winner.name}</h2>
         <p class="script-small">${winner.tag}</p>
@@ -259,35 +298,43 @@ function initQuiz(flavors) {
           <a class="btn btn-primary" href="/flavors.html#${winner.id}">See the collection</a>
           <button class="btn btn-outline" type="button" id="quiz-again">Try again</button>
         </p>
-      </div>`;
-      document.getElementById("quiz-again").addEventListener("click", () => {
-        step = 0;
-        Object.keys(score).forEach((k) => (score[k] = 0));
-        render();
-      });
-      return;
+      </div></div>`;
     }
 
     const q = questions[step];
-    quizRoot.innerHTML = `
+    return `<div class="quiz-face">
       <div class="quiz-progress" aria-hidden="true"><span style="width:${(step / questions.length) * 100}%"></span></div>
       <p class="eyebrow">Flavor Finder · ${step + 1} of ${questions.length}</p>
       <h2>${q.text}</h2>
       <div class="quiz-options">
         ${q.options.map((opt, i) => `<button type="button" data-i="${i}">${opt.label}</button>`).join("")}
-      </div>`;
-
-    quizRoot.querySelectorAll("button[data-i]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const add = q.options[Number(btn.dataset.i)].add;
-        Object.entries(add).forEach(([k, v]) => {
-          score[k] += v;
-        });
-        step += 1;
-        render();
-      });
-    });
+      </div>
+    </div>`;
   };
 
-  render();
+  const paint = () => {
+    quizRoot.style.pointerEvents = "";
+    quizRoot.innerHTML = markup();
+    bind();
+  };
+
+  const render = () => {
+    const face = quizRoot.querySelector(".quiz-face");
+    if (!face || reduceMotion) {
+      paint();
+      return;
+    }
+    quizRoot.style.pointerEvents = "none";
+    face.classList.add("is-out");
+    let swapped = false;
+    const swap = () => {
+      if (swapped) return;
+      swapped = true;
+      paint();
+    };
+    face.addEventListener("animationend", swap, { once: true });
+    setTimeout(swap, 320);
+  };
+
+  paint();
 }
