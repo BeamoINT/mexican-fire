@@ -81,7 +81,8 @@ async function postForm(payload, statusEl) {
       }),
     });
     const data = await res.json().catch(() => ({}));
-    if (data.success === false || data.success === "false") {
+    const activating = String(data.message || "").toLowerCase().includes("activat");
+    if ((data.success === false || data.success === "false") && !activating) {
       const api = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -92,7 +93,9 @@ async function postForm(payload, statusEl) {
         throw new Error(data.message || fallback.error || "We could not send that just now.");
       }
     }
-    statusEl.textContent = formSuccessMessage(payload.intent);
+    statusEl.textContent = activating
+      ? "Got it. We confirm the inbox, then write back."
+      : formSuccessMessage(payload.intent);
     statusEl.classList.add("is-ok");
     return true;
   } catch (err) {
