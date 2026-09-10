@@ -1154,14 +1154,248 @@ p {
   opacity: 0.85;
 }
 
+.flavor-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.flavor-jump a {
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(42, 20, 14, 0.14);
+  background: var(--white);
+  color: var(--ink);
+  transition: transform 0.3s var(--ease-out), background 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.flavor-jump a:hover {
+  transform: translateY(-2px);
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.flavor-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr) 300px;
+  gap: 1.8rem;
+  align-items: start;
+  padding: 2.4rem 0;
+  border-top: 1px solid rgba(42, 20, 14, 0.1);
+  scroll-margin-top: 5.5rem;
+}
+
+.flavor-sheet img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(42, 20, 14, 0.12);
+}
+
+.flavor-sheet h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  margin: 0.2rem 0 0.4rem;
+}
+
+.flavor-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  margin: 0.8rem 0 1rem;
+  font-family: var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--red);
+}
+
+.flavor-panel {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 0.85rem 1rem 1rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(42, 20, 14, 0.08);
+}
+
+.flavor-panel h3 {
+  font-family: var(--font-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: var(--red);
+  margin: 0 0 0.4rem;
+}
+
+.flavor-panel p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.nf-col {
+  justify-self: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+.nf {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #000;
+  background: #fff;
+  border: 2px solid #000;
+  padding: 3px 6px 6px;
+  width: 100%;
+  line-height: 1.12;
+}
+
+.nf-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  margin: 0;
+  line-height: 0.85;
+  padding: 1px 0 2px;
+  border-bottom: 1px solid #000;
+}
+
+.nf-servings {
+  font-size: 0.8rem;
+  margin: 3px 0 0;
+}
+
+.nf-ssize {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  border-bottom: 8px solid #000;
+  padding: 0 0 3px;
+  margin-bottom: 3px;
+}
+
+.nf-head,
+.nf-cals,
+.nf-dv,
+.nf-row {
+  grid-template-columns: 1fr 5.2rem 5.2rem;
+}
+
+.nf-head {
+  display: grid;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.nf-head span:first-child {
+  text-align: left;
+}
+
+.nf-cals {
+  display: grid;
+  align-items: end;
+  border-top: 1px solid #000;
+  border-bottom: 5px solid #000;
+  padding: 2px 0 3px;
+  font-weight: 900;
+}
+
+.nf-cals .nf-cals-name {
+  font-size: 1.05rem;
+}
+
+.nf-cals span:not(:first-child) {
+  font-size: 1.7rem;
+  line-height: 0.9;
+  text-align: right;
+}
+
+.nf-dv {
+  display: grid;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-align: right;
+  padding: 2px 0 1px;
+}
+
+.nf-row {
+  display: grid;
+  gap: 0.15rem;
+  border-top: 1px solid #000;
+  padding: 2px 0;
+  font-size: 0.72rem;
+}
+
+.nf-row span:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.nf-row b {
+  font-weight: 800;
+}
+
+.nf-indent .nf-name {
+  padding-left: 0.7rem;
+  font-weight: 400;
+}
+
+.nf-indent2 .nf-name {
+  padding-left: 1.35rem;
+  font-weight: 400;
+}
+
+.nf-vits {
+  border-top: 8px solid #000;
+}
+
+.nf-vits .nf-row {
+  font-size: 0.68rem;
+}
+
+.nf-note {
+  border-top: 1px solid #000;
+  margin-top: 2px;
+  padding-top: 3px;
+  font-size: 0.58rem;
+  line-height: 1.25;
+}
+
+.nf-meta {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.nf-meta p {
+  margin: 0 0 0.45rem;
+}
+
+.quiz-nf {
+  margin: 0.9rem auto 0;
+  max-width: 16rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
 @media (max-width: 1080px) {
   .flavor-grid,
   .collection-row,
   .steps,
   .partners,
   .split,
-  .contact-grid {
+  .contact-grid,
+  .flavor-sheet {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .flavor-sheet .nf-col {
+    grid-column: 1 / -1;
+    max-width: 320px;
   }
 
   .collection-row {
@@ -1201,7 +1435,8 @@ p {
   .steps,
   .partners,
   .split,
-  .contact-grid {
+  .contact-grid,
+  .flavor-sheet {
     grid-template-columns: 1fr;
   }
 
